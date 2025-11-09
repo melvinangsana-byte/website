@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Escape From Zombies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --accent: #1ee8b7;
+      --muted: #9ab0b3;
+      --text: #e8f6f8;
+      --card: rgba(255,255,255,.06);
+      --glass: rgba(30, 232, 183, .12);
+      --ring: rgba(30, 232, 183, .35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;padding:0;}
+    body{
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background-image: url("https://wallpapers.com/images/featured/zombie-apocalypse-48dz08kys5bmicg8.webp");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      position: relative;
+    }
+    body::before{
+      content:"";
+      position:fixed;
+      top:0;left:0;right:0;bottom:0;
+      background:rgba(0,0,0,0.65);
+      z-index:-1;
+    }
+
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1200px;margin:0 auto;padding:24px}
+
+    /* Header */
+    header{position:sticky;top:0;z-index:40;background:rgba(0,0,0,0.6);backdrop-filter: blur(6px);}
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(255,255,255,.06);}
+    .brand{display:flex;gap:12px;align-items:center}
+    .brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(145deg, #1ee8b7, #119a7f);box-shadow:0 0 0 4px var(--glass), 0 6px 30px rgba(30,232,183,.25);}
+    .brand h1{margin:0;font-family:"Bebas Neue", system-ui;letter-spacing:.5px;font-size:28px}
+    .nav a.btn{padding:10px 16px;border:1px solid var(--ring);border-radius:12px;background:rgba(255,255,255,0.05);}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:40px;align-items:center;padding:64px 24px 24px}
+    .title{font-family:"Bebas Neue", system-ui;font-size:64px;line-height:.95;margin:0 0 12px}
+    .subtitle{font-size:18px;color:var(--muted);max-width:58ch}
+
+    .badges{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:24px}
+    .badge{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid rgba(255,255,255,.06);padding:10px 12px;border-radius:12px}
+    .tick{width:18px;height:18px;border-radius:5px;background:linear-gradient(145deg,#1ee8b7,#119a7f);display:inline-grid;place-items:center;box-shadow:0 0 0 3px var(--glass)}
+    .tick:before{content:"✓";font-weight:800;color:#07221c;font-size:14px}
+
+    .cta{display:flex;gap:12px;margin-top:22px}
+    .btn{padding:12px 16px;border-radius:14px;font-weight:600;border:1px solid transparent;transition:.2s transform ease, .3s box-shadow ease;cursor:pointer}
+    .btn.primary{background:linear-gradient(145deg, #1ee8b7, #119a7f);color:#06231c;box-shadow:0 10px 30px rgba(30,232,183,.35)}
+    .btn.ghost{background:transparent;border-color:var(--ring);color:var(--text)}
+    .btn:hover{transform:translateY(-1px)}
+
+    .mock{
+      position:relative;border-radius:16px;overflow:hidden;min-height:360px;
+      box-shadow:0 0 0 6px var(--glass), 0 20px 80px rgba(0,0,0,.45);
+      border:1px solid rgba(255,255,255,.1);
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .mock img, .mock iframe{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      flex:1;
+    }
+    .mock .switcher{
+      position:absolute;
+      padding:10px;
+      text-align:center;
+      transform: translate(0px, 150PX);
+    }
+    .mock {
+        position: relative;
+        width: 100%;
+        max-width: 1000px;
+        aspect-ratio: 16 / 9;   
+        background: #111;
+        border-radius: 12px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .mock img {
+        position: absolute;
+        width: 120%;
+        height: 140%;
+        object-fit: cover;
+        border: 0;
+        transform: translate(-270px, -200px); 
+    }
+    .mock iframe {
+        position: relative;
+        width: 165%;
+        height: 200%;
+        object-fit: cover;
+        border: 0;
+        transform: translate(-100px, -100px); 
+    }
+
+
+
+    /* Sections */
+    section{padding:56px 24px}
+    .section-title{font-family:"Bebas Neue";font-size:42px;margin:0 0 8px}
+    .section-desc{color:var(--muted);max-width:70ch;margin:0 0 20px}
+
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);padding:22px;border-radius:16px}
+    ol.guides{counter-reset:item;display:grid;gap:14px}
+    ol.guides li{list-style:none}
+    ol.guides li .step{display:flex;gap:14px;align-items:flex-start}
+    .num{width:36px;height:36px;border-radius:10px;background:rgba(30,232,183,.15);border:1px solid var(--ring);display:grid;place-items:center;font-weight:800}
+    .step p{margin:4px 0 0}
+
+    /* Footer */
+    footer{padding:32px 24px;border-top:1px solid rgba(255,255,255,.08);color:#94a8ab}
+
+    /* Responsive */
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr;gap:24px}
+      .title{font-size:48px}
+      .badges{grid-template-columns:1fr}
+	}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <h1>Escape From Zombies</h1>
+      </div>
+    </div>
+  </header>  
+
+  <main class="container">
+    <!-- Hero -->
+    <section class="hero" aria-label="hero">
+      <div>
+        <h2 class="title">KARYA ANAK<br/>BANGSA</h2>
+        <p class="subtitle"><strong>Escape From Zombies</strong></p>
+        <div class="badges" role="list">
+          <div class="badge" role="listitem"><span class="tick" aria-hidden="true"></span><span>Cari <strong>3 kunci</strong> di setiap lantai</span></div>
+          <div class="badge" role="listitem"><span class="tick" aria-hidden="true"></span><span>Pistol tersedia, <strong>peluru terbatas</strong></span></div>
+          <div class="badge" role="listitem"><span class="tick" aria-hidden="true"></span><span>Hati-hati: <strong>kuncinya bukan hanya satu</strong></span></div>
+          <div class="badge" role="listitem"><span class="tick" aria-hidden="true"></span><span>Bisa <strong>membunuh</strong> atau <strong>bersembunyi</strong> dari zombie</span></div>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="https://www.roblox.com/games/139573753876929/randogi">Mulai Game</a>
+          <a class="btn ghost" href="#prolog">Lihat Prolog</a>
+		  <a class="btn primary" href="https://docs.google.com/forms/d/e/1FAIpQLSdTtR1X2PVfIjVHEgwWavNuumEQXGD4hYYQlRD-2brXCTKegA/viewform?usp=dialog">Formulir Penilaian</a>
+		  <a class="btn ghost" href="https://youtu.be/rVlfbJenFlM?si=TYAG9a5Z9oaaLm7J">Video</a>
+        </div>
+      </div>
+      <aside class="mock" aria-label="preview">
+        <div id="previewWrapper">
+          <img id="previewImage" src="https://i.ibb.co.com/j9BsG47t/IMG-20251109-WA0000.jpg" alt="Escape From Zombies Preview">
+          <img id="previewImage" src="https://i.ibb.co.com/j9BsG47t/IMG-20251109-WA0000.jpg" alt="Escape From Zombies Preview">	
+          <img id="previewImage" src="https://i.ibb.co.com/204c3ftx/IMG-20251109-WA0082.jpg" alt="Escape From Zombies Preview">	
+        </div>
+        <div class="switcher">
+          <button class="btn ghost" onclick="switchMedia()">NEXT</button>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Prolog -->
+    <section id="prolog">
+      <h3 class="section-title">Prolog</h3>
+      <p class="section-desc">Seorang pria yang terbangun di apartment-nya mendapati bahwa gedung tersebut telah diserang oleh wabah zombie. Ia harus berjuang untuk tetap bertahan hidup dan mencari jalan keluar dari apartment itu.</p>
+    </section>
+
+    <!-- Petunjuk -->
+    <section id="petunjuk">
+      <h3 class="section-title">Petunjuk Permainan</h3>
+      <p class="section-desc">Ikuti langkah-langkah berikut untuk menyelesaikan misi dan melarikan diri.</p>
+      <div class="card">
+        <ol class="guides">
+          <li>
+            <div class="step">
+              <div class="num">1</div>
+              <div>
+                <strong>Kunci pertama — Lantai 1</strong>
+                <p>Temukan kunci di suatu tempat di lantai 1. Kunci ini membuka pintu menuju lantai 2. <em>Hati-hati karena kuncinya bukan hanya satu.</em></p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="num">2</div>
+              <div>
+                <strong>Kunci kedua — Lantai 2</strong>
+                <p>Temukan kunci di suatu tempat di lantai 2. Kunci ini membuka pintu menuju lantai 3. <em>Hati-hati karena kuncinya bukan hanya satu.</em></p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="num">3</div>
+              <div>
+                <strong>Kunci terakhir — Lantai 3</strong>
+                <p>Di lantai ini, temukan kunci terakhir lalu segera kembali ke lantai 1 untuk membuka pintu apartment dan kabur.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="num">4</div>
+              <div>
+                <strong>Senjata</strong>
+                <p>Pemain mendapatkan pistol, namun <strong>peluru sangat terbatas</strong>. Gunakan dengan bijak.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="num">5</div>
+              <div>
+                <strong>Waspada zombie</strong>
+                <p>Jika dikejar, pilih untuk <strong>membunuh</strong> atau <strong>bersembunyi</strong> hingga zombie pergi.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const media = [
+      "https://i.ibb.co.com/3Y5TntsD/IMG-20251109-WA0001.jpg",
+      "https://i.ibb.co.com/j9BsG47t/IMG-20251109-WA0000.jpg",
+      "https://i.ibb.co.com/204c3ftx/IMG-20251109-WA0082.jpg"
+    ];
+    let currentIndex = 0;
+
+    function switchMedia(){
+      currentIndex = (currentIndex + 1) % media.length;
+      const wrapper = document.getElementById("previewWrapper");
+      wrapper.innerHTML = ""; // kosongkan isi
+
+      if(media[currentIndex].includes("youtube.com/embed")){
+        const iframe = document.createElement("iframe");
+        iframe.src = media[currentIndex];
+        iframe.style.border = "0";
+        iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+        iframe.allowFullscreen = true;
+        wrapper.appendChild(iframe);
+      } else {
+        const img = document.createElement("img");
+        img.src = media[currentIndex];
+        img.alt = "Escape From Zombies Preview";
+        img.style.objectFit = "auto";
+        wrapper.appendChild(img);
+      }
+    }
+  </script>
+</body>
+</html>
